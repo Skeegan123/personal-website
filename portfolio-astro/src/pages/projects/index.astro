@@ -1,0 +1,304 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getProjects } from '../../lib/sanity';
+
+const projects = await getProjects();
+
+const formattedDate = new Intl.DateTimeFormat('en-US', {
+  year: 'numeric',
+  month: 'short'
+});
+---
+
+<BaseLayout
+  title="Projects | Keegan Gaffney Software Portfolio"
+  description="A collection of projects I've built — from mobile apps to web platforms."
+>
+  <section class="page-header entrance">
+    <p class="section-label">Projects</p>
+    <h1 class="page-title">Things I've built.</h1>
+    <p class="page-desc">
+      A collection of personal projects, hackathon builds, and professional work. Each one taught me something new.
+    </p>
+  </section>
+
+  {projects.length > 0 ? (
+    <div class="projects-grid stagger">
+      {projects.map((project, i) => (
+        <a href={`/projects/${project.slug}`} class="project-item reveal">
+          <div class="project-img">
+            {project.imageUrl ? (
+              <img src={project.imageUrl} alt={project.title} loading="lazy" />
+            ) : (
+              <div class="project-placeholder">
+                <div class="placeholder-pattern">
+                  <div class="pattern-line"></div>
+                  <div class="pattern-line short"></div>
+                  <div class="pattern-line medium"></div>
+                </div>
+              </div>
+            )}
+          </div>
+          <div class="project-info">
+            <div class="project-meta">
+              {project.publishedAt && (
+                <span class="project-date">{formattedDate.format(new Date(project.publishedAt))}</span>
+              )}
+              {project.role && (
+                <span class="project-role">{project.role}</span>
+              )}
+            </div>
+            <h2 class="project-name">{project.title}</h2>
+            <p class="project-summary">{project.summary ?? 'Details coming soon.'}</p>
+            {project.stack && project.stack.length > 0 && (
+              <div class="project-tags">
+                {project.stack.map((tag) => (
+                  <span class="pill">{tag}</span>
+                ))}
+              </div>
+            )}
+            <div class="project-links-row">
+              <span class="project-view">
+                View {project.title}
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </span>
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+  ) : (
+    <div class="empty-state glass-card entrance entrance-d2">
+      <div class="empty-visual">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/><line x1="12" y1="11" x2="12" y2="17"/><line x1="9" y1="14" x2="15" y2="14"/></svg>
+      </div>
+      <h2>No projects yet</h2>
+      <p>Once you add project documents to your Sanity dataset, they'll appear here automatically.</p>
+    </div>
+  )}
+</BaseLayout>
+
+<style>
+  /* ========================================
+     PAGE HEADER
+     ======================================== */
+  .page-header {
+    max-width: 640px;
+    margin-bottom: var(--space-2xl);
+  }
+
+  .page-title {
+    font-size: clamp(2rem, 4.5vw, 3.2rem);
+    letter-spacing: -0.035em;
+    margin-bottom: var(--space-sm);
+  }
+
+  .page-desc {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    max-width: 52ch;
+  }
+
+  /* ========================================
+     PROJECTS GRID
+     ======================================== */
+  .projects-grid {
+    display: grid;
+    gap: var(--space-lg);
+  }
+
+  .project-item {
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    gap: var(--space-xl);
+    align-items: center;
+    padding: var(--space-md);
+    background: var(--bg-glass-strong);
+    backdrop-filter: blur(12px) saturate(150%);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-sm);
+    transition: all var(--duration-normal) var(--ease-out);
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .project-item:hover {
+    box-shadow: var(--shadow-lg);
+    border-color: var(--border-strong);
+    transform: translateY(-3px);
+  }
+
+  .project-item:hover .project-view {
+    color: var(--accent);
+    gap: 0.65rem;
+  }
+
+  .project-item:hover .project-img img {
+    transform: scale(1.04);
+  }
+
+  /* Image */
+  .project-img {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    aspect-ratio: 16 / 10;
+    background: var(--bg-base);
+  }
+
+  .project-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--duration-slow) var(--ease-out);
+  }
+
+  .project-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(145deg, #f0f2f4 0%, rgba(45, 106, 79, 0.06) 100%);
+    padding: var(--space-lg);
+  }
+
+  .placeholder-pattern {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    width: 60%;
+    opacity: 0.3;
+  }
+
+  .pattern-line {
+    height: 6px;
+    background: var(--text-tertiary);
+    border-radius: 3px;
+    width: 100%;
+  }
+
+  .pattern-line.short {
+    width: 55%;
+  }
+
+  .pattern-line.medium {
+    width: 80%;
+  }
+
+  /* Info */
+  .project-info {
+    padding: var(--space-xs) 0;
+  }
+
+  .project-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: 0.5rem;
+  }
+
+  .project-date,
+  .project-role {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-tertiary);
+  }
+
+  .project-role::before {
+    content: '\00B7';
+    margin-right: var(--space-sm);
+  }
+
+  .project-name {
+    font-family: var(--font-display);
+    font-size: 1.45rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.45rem;
+  }
+
+  .project-summary {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    max-width: 52ch;
+  }
+
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-top: 0.85rem;
+  }
+
+  .project-links-row {
+    margin-top: 1rem;
+  }
+
+  .project-view {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    transition: all var(--duration-fast) var(--ease-out);
+  }
+
+  /* Empty state */
+  .empty-state {
+    text-align: center;
+    padding: var(--space-3xl) var(--space-lg);
+  }
+
+  .empty-visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    border-radius: var(--radius-xl);
+    background: var(--accent-soft);
+    color: var(--accent);
+    margin: 0 auto var(--space-lg);
+  }
+
+  .empty-state h2 {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .empty-state p {
+    color: var(--text-secondary);
+    max-width: 44ch;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  /* ========================================
+     RESPONSIVE
+     ======================================== */
+  @media (max-width: 800px) {
+    .project-item {
+      grid-template-columns: 1fr;
+      gap: var(--space-md);
+    }
+
+    .project-img {
+      aspect-ratio: 2.2 / 1;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .page-title {
+      font-size: 2rem;
+    }
+
+    .project-name {
+      font-size: 1.2rem;
+    }
+  }
+</style>

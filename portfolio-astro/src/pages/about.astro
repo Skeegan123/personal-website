@@ -1,0 +1,374 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import headshot from '../assets/headshot.jpg';
+---
+
+<BaseLayout
+  title="About Keegan Gaffney | Software Engineer in Seattle"
+  description="Software engineer in Seattle. Frontend, full-stack, and AI. Currently at Land id, previously at Amazon."
+  image="/IMG_0965-optimized.jpg"
+>
+  <section class="about-hero">
+    <div class="about-hero-content">
+      <p class="section-label entrance">About</p>
+      <h1 class="about-hero-title entrance entrance-d1">A bit about me.</h1>
+      <p class="about-hero-subtitle entrance entrance-d2">
+        I'm a software engineer in Seattle, WA. I build web applications professionally and spend my free time tinkering with AI, side projects, and whatever else I can get my hands on.
+      </p>
+    </div>
+    <div class="about-hero-photo entrance entrance-d3">
+      <Image
+        src={headshot}
+        alt="Keegan Gaffney"
+        class="hero-photo"
+        width={340}
+        loading="eager"
+        fetchpriority="high"
+      />
+    </div>
+  </section>
+
+  <section class="about-story reveal">
+    <div class="story-grid">
+      <div class="story-content">
+        <h2>What I do</h2>
+        <p>
+          I work at <strong>Land id</strong> as a software engineer, where I build frontend features in React within an Nx monorepo. The platform is a geospatial property tool used by land professionals, realtors, and outdoor enthusiasts across the country. Most of my day-to-day is React and TypeScript.
+        </p>
+        <p>
+          Before Land id, I interned at <strong>Amazon</strong> on the Amazon Pay team during the summer of 2023. I built a new API that is now used by millions of users across Europe.
+        </p>
+        <p>
+          I graduated from <strong>Montana State University</strong> in December 2024 with a B.S. in Computer Science. While I was there, I competed in hackathons (DubHacks finalist with PackPoint, plus HackHarvard and TreeHacks), shipped side projects, and picked up a range of experience across web, mobile, and backend work.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="about-now reveal">
+    <h2>What I'm into right now</h2>
+    <div class="now-grid stagger">
+      <div class="now-card glass-card reveal">
+        <div class="now-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 0 1 4 4v1a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-1l-2 5H11l-2-5H8a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2V6a4 4 0 0 1 4-4Z"/><circle cx="10" cy="10" r="1"/><circle cx="14" cy="10" r="1"/></svg>
+        </div>
+        <h3>AI and tooling</h3>
+        <p>I spend a lot of time learning about and applying AI to my daily workflow. From code generation to automation, I'm constantly exploring how these tools change the way software gets built.</p>
+      </div>
+      <div class="now-card glass-card reveal">
+        <div class="now-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        </div>
+        <h3>Side projects</h3>
+        <p>I built a QR code based RSVP system for my wedding, a White Elephant randomizer app for my family, and I'm currently building a website for my dad's construction company. I like solving real problems for real people.</p>
+      </div>
+      <div class="now-card glass-card reveal">
+        <div class="now-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H2v13h20V7h-5l-2.5-3z"/><circle cx="12" cy="14" r="4"/></svg>
+        </div>
+        <h3>Making things</h3>
+        <p>Outside of code, I'm into rock climbing, 3D printing, woodworking, CAD, and building circuits. I like working with my hands as much as I like working in a terminal.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="about-projects reveal">
+    <h2>Notable projects</h2>
+    <div class="projects-list">
+      <div class="project-item glass-card">
+        <div class="project-meta">
+          <h3>PackPoint</h3>
+          <span class="project-context">DubHacks '22 Finalist</span>
+        </div>
+        <p>A location-sharing app for college students built with SwiftUI, Firebase, and Mapbox. Users pin and share their favorite spots around campus.</p>
+      </div>
+      <div class="project-item glass-card">
+        <div class="project-meta">
+          <h3>MultiStreamers</h3>
+          <span class="project-context">1,100 peak concurrent users</span>
+        </div>
+        <p>A web app for watching multiple Twitch and YouTube streams at the same time. Built with React and Node.js. Hit 1,100 users in 30 minutes at peak.</p>
+      </div>
+      <div class="project-item glass-card">
+        <div class="project-meta">
+          <h3>Wedding RSVP System</h3>
+          <span class="project-context">Personal project</span>
+        </div>
+        <p>A QR code based RSVP web app where guests received personalized codes. Scanning took them directly to their RSVP page with their info pre-filled.</p>
+      </div>
+      <div class="project-item glass-card">
+        <div class="project-meta">
+          <h3>White Elephant App</h3>
+          <span class="project-context">Personal project</span>
+        </div>
+        <p>A Secret Santa and White Elephant randomizer for my family. It assigns people, contacts everyone with their match, and sends each person a survey about themselves.</p>
+      </div>
+    </div>
+    <div class="projects-cta">
+      <a href="/projects" class="btn btn-secondary">
+        View all projects
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <section class="about-connect reveal">
+    <div class="connect-card glass-card">
+      <h2>Get in touch</h2>
+      <p>I'm always open to interesting conversations and opportunities. Feel free to reach out.</p>
+      <div class="connect-actions">
+        <a href="https://www.linkedin.com/in/keegangaffney/" target="_blank" rel="noreferrer" class="btn btn-primary">
+          LinkedIn
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+        </a>
+        <a href="https://github.com/Skeegan123" target="_blank" rel="noreferrer" class="btn btn-secondary">
+          GitHub
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+        </a>
+        <a href="mailto:contact@keegangaffney.com" class="btn btn-secondary">
+          Email
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* ========================================
+     ABOUT HERO
+     ======================================== */
+  .about-hero {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    align-items: center;
+    gap: var(--space-2xl);
+    padding-bottom: var(--space-3xl);
+  }
+
+  .about-hero-title {
+    font-size: clamp(2.4rem, 5vw, 3.8rem);
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    line-height: 1.05;
+    margin-bottom: var(--space-md);
+  }
+
+  .about-hero-subtitle {
+    font-size: 1.15rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    max-width: 56ch;
+  }
+
+  .about-hero-photo {
+    display: flex;
+    justify-content: center;
+  }
+
+  .hero-photo {
+    width: 100%;
+    max-width: 340px;
+    height: auto;
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border);
+  }
+
+  /* ========================================
+     STORY
+     ======================================== */
+  .about-story {
+    padding-bottom: var(--space-3xl);
+  }
+
+  .story-content h2 {
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    letter-spacing: -0.03em;
+    margin-bottom: var(--space-lg);
+  }
+
+  .story-content p {
+    color: var(--text-secondary);
+    line-height: 1.75;
+    margin-bottom: var(--space-md);
+  }
+
+  .story-content p:last-child {
+    margin-bottom: 0;
+  }
+
+  .story-content strong {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+
+  /* ========================================
+     WHAT I'M INTO NOW
+     ======================================== */
+  .about-now {
+    padding-bottom: var(--space-3xl);
+  }
+
+  .about-now h2 {
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    letter-spacing: -0.03em;
+    margin-bottom: var(--space-lg);
+  }
+
+  .now-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-md);
+  }
+
+  .now-card {
+    padding: var(--space-lg);
+  }
+
+  .now-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-sm);
+    background: var(--accent-soft);
+    color: var(--accent);
+    margin-bottom: var(--space-md);
+  }
+
+  .now-card h3 {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: var(--space-xs);
+  }
+
+  .now-card p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  /* ========================================
+     NOTABLE PROJECTS
+     ======================================== */
+  .about-projects {
+    padding-bottom: var(--space-3xl);
+  }
+
+  .about-projects h2 {
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    letter-spacing: -0.03em;
+    margin-bottom: var(--space-lg);
+  }
+
+  .projects-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .project-item {
+    padding: var(--space-md) var(--space-lg);
+  }
+
+  .project-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-xs);
+    flex-wrap: wrap;
+  }
+
+  .project-meta h3 {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 700;
+  }
+
+  .project-context {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--accent);
+    padding: 0.15rem 0.55rem;
+    background: var(--accent-soft);
+    border-radius: var(--radius-full);
+  }
+
+  .project-item p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    max-width: 60ch;
+  }
+
+  .projects-cta {
+    margin-top: var(--space-lg);
+  }
+
+  /* ========================================
+     CONNECT
+     ======================================== */
+  .about-connect {
+    padding-bottom: var(--space-xl);
+  }
+
+  .connect-card {
+    padding: var(--space-xl);
+    text-align: center;
+  }
+
+  .connect-card h2 {
+    font-size: 1.6rem;
+    letter-spacing: -0.03em;
+    margin-bottom: var(--space-xs);
+  }
+
+  .connect-card p {
+    color: var(--text-secondary);
+    margin-bottom: var(--space-lg);
+    font-size: 0.95rem;
+  }
+
+  .connect-actions {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  /* ========================================
+     RESPONSIVE
+     ======================================== */
+  @media (max-width: 900px) {
+    .about-hero {
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
+    }
+
+    .about-hero-photo {
+      order: -1;
+    }
+
+    .hero-photo {
+      max-width: 240px;
+      border-radius: var(--radius-lg);
+    }
+
+    .now-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .about-hero-title {
+      font-size: clamp(2rem, 8vw, 2.8rem);
+    }
+
+    .connect-card {
+      padding: var(--space-lg);
+    }
+  }
+</style>

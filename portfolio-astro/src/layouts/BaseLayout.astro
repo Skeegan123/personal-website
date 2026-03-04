@@ -1,0 +1,600 @@
+---
+import '@fontsource/manrope/400.css';
+import '@fontsource/manrope/500.css';
+import '@fontsource/manrope/600.css';
+import '@fontsource/space-grotesk/700.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  type?: 'website' | 'article';
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description = 'Keegan Gaffney — Software Engineer',
+  image = '/IMG_0965-optimized.jpg',
+  type = 'website',
+  noindex = false
+} = Astro.props;
+
+const currentPath = Astro.url.pathname;
+const site = Astro.site ?? new URL('https://keegangaffney.com');
+const homeUrl = new URL('/', site).toString();
+const aboutUrl = new URL('/about', site).toString();
+const canonicalUrl = new URL(currentPath, site).toString();
+const socialImage = new URL(image, site).toString();
+const robots = noindex ? 'noindex, nofollow' : 'index, follow';
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': `${homeUrl}#website`,
+      url: homeUrl,
+      name: 'Keegan Gaffney',
+      inLanguage: 'en-US'
+    },
+    {
+      '@type': 'Person',
+      '@id': `${aboutUrl}#person`,
+      name: 'Keegan Gaffney',
+      url: aboutUrl,
+      jobTitle: 'Software Engineer',
+      sameAs: [
+        'https://github.com/Skeegan123',
+        'https://www.linkedin.com/in/keegangaffney/'
+      ]
+    }
+  ]
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="robots" content={robots} />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content="Keegan Gaffney" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={socialImage} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" sizes="any" />
+
+    <title>{title}</title>
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+  </head>
+  <body>
+    <!-- Ambient background blobs -->
+    <div class="bg-ambient" aria-hidden="true">
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+      <div class="blob blob-3"></div>
+    </div>
+
+    <header class="site-header">
+      <nav class="nav-inner">
+        <a href="/" class="nav-logo">
+          <img src="/logo.svg" alt="Keegan Gaffney" class="logo-img" width="32" height="32" />
+        </a>
+        <div class="nav-links">
+          <a href="/" class:list={["nav-link", { active: currentPath === "/" }]}>Home</a>
+          <a href="/about" class:list={["nav-link", { active: currentPath === "/about" || currentPath === "/about/" }]}>About</a>
+          <a href="/projects" class:list={["nav-link", { active: currentPath.startsWith("/projects") }]}>Projects</a>
+          <a href="https://github.com/Skeegan123" target="_blank" rel="noreferrer" class="nav-link nav-link--icon" aria-label="GitHub">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12Z"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/in/keegangaffney/" target="_blank" rel="noreferrer" class="nav-link nav-link--icon" aria-label="LinkedIn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286ZM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065Zm1.782 13.019H3.555V9h3.564v11.452ZM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003Z"/></svg>
+          </a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="page-shell">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p class="footer-copy">&copy; {new Date().getFullYear()} Keegan Gaffney</p>
+        <div class="footer-links">
+          <a href="https://github.com/Skeegan123" target="_blank" rel="noreferrer">GitHub</a>
+          <a href="https://www.linkedin.com/in/keegangaffney/" target="_blank" rel="noreferrer">LinkedIn</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style is:global>
+  /* ========================================
+     DESIGN TOKENS
+     Soft modern: clean white, forest green accent,
+     rounded shapes, gentle gradients
+     ======================================== */
+  :root {
+    /* Background layers */
+    --bg-base: #f8f9fa;
+    --bg-surface: #ffffff;
+    --bg-elevated: #ffffff;
+    --bg-glass: rgba(255, 255, 255, 0.65);
+    --bg-glass-strong: rgba(255, 255, 255, 0.82);
+
+    /* Text hierarchy */
+    --text-primary: #1a1d21;
+    --text-secondary: #52585e;
+    --text-tertiary: #868e96;
+    --text-inverse: #ffffff;
+
+    /* Accent — forest green */
+    --accent: #2d6a4f;
+    --accent-soft: #e9f5ef;
+    --accent-hover: #1b4332;
+
+    /* Borders and dividers */
+    --border: rgba(0, 0, 0, 0.07);
+    --border-strong: rgba(0, 0, 0, 0.13);
+
+    /* Shadows */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.03);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.06), 0 2px 4px rgba(0, 0, 0, 0.04);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(0, 0, 0, 0.04);
+    --shadow-glow: 0 0 40px rgba(45, 106, 79, 0.12);
+
+    /* Radii */
+    --radius-sm: 0.5rem;
+    --radius-md: 0.875rem;
+    --radius-lg: 1.25rem;
+    --radius-xl: 1.75rem;
+    --radius-full: 999px;
+
+    /* Spacing */
+    --space-xs: 0.375rem;
+    --space-sm: 0.75rem;
+    --space-md: 1.25rem;
+    --space-lg: 2rem;
+    --space-xl: 3rem;
+    --space-2xl: 5rem;
+    --space-3xl: 8rem;
+
+    /* Typography */
+    --font-display: 'Space Grotesk', 'Avenir Next', 'Segoe UI', sans-serif;
+    --font-body: 'Manrope', 'Avenir Next', 'Segoe UI', sans-serif;
+
+    /* Transitions */
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --duration-fast: 150ms;
+    --duration-normal: 300ms;
+    --duration-slow: 500ms;
+  }
+
+  /* ========================================
+     RESET & BASE
+     ======================================== */
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--text-primary);
+    background: var(--bg-base);
+    min-height: 100dvh;
+    overflow-x: hidden;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  img {
+    display: block;
+    max-width: 100%;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+  }
+
+  /* ========================================
+     AMBIENT BACKGROUND
+     ======================================== */
+  .bg-ambient {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+  }
+
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.5;
+    animation: float 20s ease-in-out infinite;
+  }
+
+  .blob-1 {
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(45, 106, 79, 0.12), transparent 70%);
+    top: -10%;
+    right: -8%;
+    animation-delay: 0s;
+  }
+
+  .blob-2 {
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(64, 145, 108, 0.09), transparent 70%);
+    bottom: 10%;
+    left: -10%;
+    animation-delay: -7s;
+  }
+
+  .blob-3 {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(82, 183, 136, 0.08), transparent 70%);
+    top: 50%;
+    right: 30%;
+    animation-delay: -14s;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(30px, -20px) scale(1.05); }
+    66% { transform: translate(-20px, 15px) scale(0.95); }
+  }
+
+  /* ========================================
+     NAVIGATION
+     ======================================== */
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: var(--space-sm) 0;
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    background: rgba(248, 249, 250, 0.7);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: min(1120px, 100% - 2rem);
+    margin: 0 auto;
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .logo-img {
+    width: 32px;
+    height: 32px;
+    filter: grayscale(1) brightness(0.35);
+    transition: filter var(--duration-fast) var(--ease-out), opacity var(--duration-fast) var(--ease-out);
+    opacity: 0.95;
+  }
+
+  .nav-logo:hover .logo-img {
+    filter: none;
+    opacity: 1;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .nav-link {
+    padding: 0.5rem 0.875rem;
+    border-radius: var(--radius-full);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: all var(--duration-fast) var(--ease-out);
+  }
+
+  .nav-link:hover {
+    color: var(--text-primary);
+    background: rgba(0, 0, 0, 0.04);
+  }
+
+  .nav-link.active {
+    color: var(--text-primary);
+    background: var(--bg-glass-strong);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .nav-link--icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    color: var(--text-tertiary);
+  }
+
+  .nav-link--icon:hover {
+    color: var(--text-primary);
+  }
+
+  /* ========================================
+     PAGE SHELL
+     ======================================== */
+  .page-shell {
+    width: min(1120px, 100% - 2rem);
+    margin: 0 auto;
+    padding: var(--space-2xl) 0 var(--space-3xl);
+    min-height: calc(100dvh - 200px);
+  }
+
+  /* ========================================
+     FOOTER
+     ======================================== */
+  .site-footer {
+    border-top: 1px solid var(--border);
+    background: rgba(240, 244, 241, 0.65);
+    padding: var(--space-lg) 0;
+  }
+
+  .footer-inner {
+    width: min(1120px, 100% - 2rem);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+  }
+
+  .footer-copy {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+  }
+
+  .footer-links {
+    display: flex;
+    gap: var(--space-md);
+  }
+
+  .footer-links a {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    transition: color var(--duration-fast) var(--ease-out), text-decoration-color var(--duration-fast) var(--ease-out);
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 0.12em;
+  }
+
+  .footer-links a:hover {
+    color: var(--text-primary);
+    text-decoration-color: rgba(42, 59, 46, 0.35);
+  }
+
+  /* ========================================
+     SHARED UTILITIES
+     ======================================== */
+
+  /* Glass card */
+  .glass-card {
+    background: var(--bg-glass-strong);
+    backdrop-filter: blur(12px) saturate(150%);
+    -webkit-backdrop-filter: blur(12px) saturate(150%);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    transition: all var(--duration-normal) var(--ease-out);
+  }
+
+  .glass-card:hover {
+    box-shadow: var(--shadow-md);
+    border-color: var(--border-strong);
+    transform: translateY(-2px);
+  }
+
+  /* Pill / tag */
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.3rem 0.7rem;
+    border-radius: var(--radius-full);
+    background: var(--bg-glass);
+    border: 1px solid var(--border);
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+  }
+
+  /* Section label */
+  .section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: var(--space-sm);
+  }
+
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 1.5rem;
+    height: 2px;
+    background: var(--accent);
+    border-radius: 1px;
+  }
+
+  /* Button styles */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.3rem;
+    border-radius: var(--radius-full);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all var(--duration-fast) var(--ease-out);
+    cursor: pointer;
+    border: none;
+  }
+
+  .btn-primary {
+    background: var(--text-primary);
+    color: var(--text-inverse);
+  }
+
+  .btn-primary:hover {
+    background: var(--accent);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .btn-secondary {
+    background: var(--bg-glass-strong);
+    color: var(--text-primary);
+    border: 1px solid var(--border-strong);
+  }
+
+  .btn-secondary:hover {
+    background: var(--bg-surface);
+    border-color: var(--text-primary);
+    transform: translateY(-1px);
+  }
+
+  /* ========================================
+     SCROLL REVEAL ANIMATIONS
+     ======================================== */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Stagger children */
+  .stagger > .reveal:nth-child(1) { transition-delay: 0ms; }
+  .stagger > .reveal:nth-child(2) { transition-delay: 80ms; }
+  .stagger > .reveal:nth-child(3) { transition-delay: 160ms; }
+  .stagger > .reveal:nth-child(4) { transition-delay: 240ms; }
+  .stagger > .reveal:nth-child(5) { transition-delay: 320ms; }
+  .stagger > .reveal:nth-child(6) { transition-delay: 400ms; }
+
+  /* Page load entrance */
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .entrance {
+    animation: fadeUp 0.8s var(--ease-out) both;
+  }
+
+  .entrance-d1 { animation-delay: 100ms; }
+  .entrance-d2 { animation-delay: 200ms; }
+  .entrance-d3 { animation-delay: 300ms; }
+  .entrance-d4 { animation-delay: 400ms; }
+  .entrance-d5 { animation-delay: 500ms; }
+
+  /* ========================================
+     RESPONSIVE
+     ======================================== */
+  @media (max-width: 768px) {
+    .page-shell {
+      padding: var(--space-xl) 0 var(--space-2xl);
+    }
+
+    .footer-inner {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .nav-link:not(.nav-link--icon) {
+      padding: 0.4rem 0.65rem;
+      font-size: 0.85rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .nav-links {
+      gap: 0.125rem;
+    }
+  }
+</style>
+
+<script>
+  // Scroll reveal observer
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+  );
+
+  document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+</script>

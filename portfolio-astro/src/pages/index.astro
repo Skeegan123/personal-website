@@ -1,0 +1,710 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getProjects, getFeaturedProjects, sanityConfigured } from '../lib/sanity';
+
+const allProjects = await getProjects();
+const featuredProjects = await getFeaturedProjects();
+
+// Show featured if available, otherwise show first 3
+const displayProjects = featuredProjects.length > 0 ? featuredProjects : allProjects.slice(0, 3);
+---
+
+<BaseLayout
+  title="Keegan Gaffney | Software Engineer in Seattle"
+  description="Software engineer in Seattle. Building web applications with React, TypeScript, and AI. Currently at Land id, previously at Amazon."
+  image="/IMG_0965-optimized.jpg"
+>
+  <!-- ========== HERO ========== -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge entrance">
+        <span class="status-dot"></span>
+        Software Engineer at Land id
+      </div>
+      <h1 class="hero-title entrance entrance-d1">
+        Hey, I'm <span class="hero-name">Keegan</span><span class="hero-period">.</span>
+      </h1>
+      <p class="hero-subtitle entrance entrance-d2">
+        Software engineer in Seattle building web applications with a focus on frontend, full-stack architecture, and AI. Currently at Land id, previously at Amazon.
+      </p>
+      <div class="hero-actions entrance entrance-d3">
+        <a href="/projects" class="btn btn-primary">
+          View my work
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/in/keegangaffney/" target="_blank" rel="noreferrer" class="btn btn-secondary">
+          Get in touch
+        </a>
+      </div>
+    </div>
+    <div class="hero-visual entrance entrance-d4">
+      <div class="hero-card-stack">
+        <div class="floating-card card-1">
+          <div class="card-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          </div>
+          <span>Full-Stack</span>
+        </div>
+        <div class="floating-card card-2">
+          <div class="card-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 0 1 4 4v1a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-1l-2 5H11l-2-5H8a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2V6a4 4 0 0 1 4-4Z"/><circle cx="10" cy="10" r="1"/><circle cx="14" cy="10" r="1"/></svg>
+          </div>
+          <span>AI</span>
+        </div>
+        <div class="floating-card card-3">
+          <div class="card-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          <span>Web</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== ABOUT ========== -->
+  <section class="about reveal">
+    <div class="about-header">
+      <p class="section-label">About</p>
+      <h2 class="about-title">Building software<br/>that works.</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>
+          I'm a software engineer at <strong>Land id</strong>, where I build and ship frontend features in React for a geospatial property platform used by land professionals across the country. Before that, I interned at <strong>Amazon</strong> on the Amazon Pay team, where I developed a new API now serving millions of users across Europe.
+        </p>
+        <p>
+          I graduated from <strong>Montana State University</strong> in 2024 with a B.S. in Computer Science. During school I shipped products at hackathons like <strong>DubHacks</strong> (finalist), <strong>HackHarvard</strong>, and <strong>TreeHacks</strong>, and built side projects that people actually used.
+        </p>
+        <p>
+          Outside of work I spend a lot of time with AI tooling and development, and I'm always building something on the side. You can learn more on my <a href="/about" class="inline-link">about page</a>.
+        </p>
+      </div>
+      <div class="about-skills">
+        <h3 class="skills-title">Technologies</h3>
+        <div class="skills-grid">
+          <div class="skill-group">
+            <h4>Languages</h4>
+            <ul>
+              <li>TypeScript</li>
+              <li>Python</li>
+              <li>Ruby</li>
+              <li>Swift</li>
+            </ul>
+          </div>
+          <div class="skill-group">
+            <h4>Frontend</h4>
+            <ul>
+              <li>React</li>
+              <li>Next.js</li>
+              <li>Astro</li>
+              <li>HTML/CSS</li>
+            </ul>
+          </div>
+          <div class="skill-group">
+            <h4>Backend & Tools</h4>
+            <ul>
+              <li>Node.js</li>
+              <li>PostgreSQL</li>
+              <li>Git</li>
+              <li>Nx</li>
+              <li>AWS</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== EXPERIENCE HIGHLIGHTS ========== -->
+  <section class="experience reveal">
+    <p class="section-label">Experience</p>
+    <div class="exp-timeline">
+      <div class="exp-item glass-card">
+        <div class="exp-dot"></div>
+        <div class="exp-content">
+          <div class="exp-header">
+            <h3>Software Engineer</h3>
+            <span class="exp-date">2023 — Present</span>
+          </div>
+          <p class="exp-company">Land id</p>
+          <p class="exp-desc">Frontend development in React within an Nx monorepo. Building features for a geospatial property platform used by land professionals nationwide.</p>
+        </div>
+      </div>
+      <div class="exp-item glass-card">
+        <div class="exp-dot"></div>
+        <div class="exp-content">
+          <div class="exp-header">
+            <h3>Software Engineering Intern</h3>
+            <span class="exp-date">Summer 2023</span>
+          </div>
+          <p class="exp-company">Amazon Pay</p>
+          <p class="exp-desc">Developed a new API on the Amazon Pay team, now used by millions of users across Europe.</p>
+        </div>
+      </div>
+      <div class="exp-item glass-card">
+        <div class="exp-dot"></div>
+        <div class="exp-content">
+          <div class="exp-header">
+            <h3>B.S. Computer Science</h3>
+            <span class="exp-date">2020 — 2024</span>
+          </div>
+          <p class="exp-company">Montana State University</p>
+          <p class="exp-desc">DubHacks '22 Finalist, HackHarvard & TreeHacks participant. Multiple shipped projects and hackathon awards.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FEATURED PROJECTS ========== -->
+  <section class="featured reveal">
+    <div class="featured-header">
+      <div>
+        <p class="section-label">Selected Work</p>
+        <h2 class="featured-title">Things I've built.</h2>
+      </div>
+      <a href="/projects" class="btn btn-secondary">
+        All projects
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+
+    {displayProjects.length > 0 ? (
+      <div class="featured-grid stagger">
+        {displayProjects.map((project, i) => (
+          <a href={`/projects/${project.slug}`} class="project-card glass-card reveal">
+            <div class="project-card-img">
+              {project.imageUrl ? (
+                <img src={project.imageUrl} alt={project.title} loading="lazy" />
+              ) : (
+                <div class="project-card-placeholder">
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                </div>
+              )}
+            </div>
+            <div class="project-card-body">
+              <h3>{project.title}</h3>
+              <p>{project.summary ?? 'A project worth exploring.'}</p>
+              {project.stack && project.stack.length > 0 && (
+                <div class="project-card-tags">
+                  {project.stack.slice(0, 4).map((tag) => (
+                    <span class="pill">{tag}</span>
+                  ))}
+                </div>
+              )}
+            </div>
+            <div class="project-card-arrow">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+            </div>
+          </a>
+        ))}
+      </div>
+    ) : (
+      <div class="empty-state glass-card">
+        <div class="empty-icon">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <h3>Projects coming soon</h3>
+        <p>Connect Sanity and add your project documents to see them here.</p>
+      </div>
+    )}
+  </section>
+</BaseLayout>
+
+<style>
+  /* ========================================
+     HERO
+     ======================================== */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: var(--space-2xl);
+    padding-bottom: var(--space-3xl);
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.85rem;
+    border-radius: var(--radius-full);
+    background: var(--bg-glass-strong);
+    border: 1px solid var(--border);
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: var(--space-md);
+  }
+
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #2d6a4f;
+    box-shadow: 0 0 6px rgba(45, 106, 79, 0.4);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  .hero-title {
+    font-size: clamp(2.8rem, 6vw, 4.5rem);
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    line-height: 1.02;
+    margin-bottom: var(--space-md);
+  }
+
+  .hero-name {
+    background: linear-gradient(135deg, var(--accent) 0%, #1b4332 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-period {
+    color: var(--accent);
+  }
+
+  .hero-subtitle {
+    font-size: 1.15rem;
+    line-height: 1.65;
+    color: var(--text-secondary);
+    max-width: 48ch;
+    margin-bottom: var(--space-lg);
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  /* Hero visual — floating cards */
+  .hero-visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-card-stack {
+    position: relative;
+    width: 220px;
+    height: 260px;
+  }
+
+  .floating-card {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.85rem 1.1rem;
+    background: var(--bg-glass-strong);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    font-family: var(--font-body);
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    white-space: nowrap;
+    animation: cardFloat 6s ease-in-out infinite;
+  }
+
+  .card-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-sm);
+    background: var(--accent-soft);
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .card-1 {
+    top: 0;
+    left: 0;
+    animation-delay: 0s;
+  }
+
+  .card-2 {
+    top: 80px;
+    left: 40px;
+    animation-delay: -2s;
+  }
+
+  .card-3 {
+    top: 160px;
+    left: 10px;
+    animation-delay: -4s;
+  }
+
+  @keyframes cardFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  /* ========================================
+     ABOUT
+     ======================================== */
+  .about {
+    padding-bottom: var(--space-3xl);
+  }
+
+  .about-header {
+    margin-bottom: var(--space-xl);
+  }
+
+  .about-title {
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    letter-spacing: -0.03em;
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: var(--space-2xl);
+    align-items: start;
+  }
+
+  .about-text p {
+    color: var(--text-secondary);
+    line-height: 1.75;
+    margin-bottom: var(--space-md);
+  }
+
+  .about-text p:last-child {
+    margin-bottom: 0;
+  }
+
+  .inline-link {
+    color: var(--accent);
+    font-weight: 500;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    transition: color var(--duration-fast) var(--ease-out);
+  }
+
+  .inline-link:hover {
+    color: var(--accent-hover);
+  }
+
+  .about-text strong {
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+
+  .about-skills {
+    background: rgba(255, 255, 255, 0.84);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .skills-title {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: var(--space-md);
+  }
+
+  .skills-grid {
+    display: grid;
+    gap: var(--space-md);
+  }
+
+  .skill-group h4 {
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-xs);
+  }
+
+  .skill-group ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .skill-group li {
+    padding: 0.25rem 0.6rem;
+    background: #ffffff;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-full);
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-primary);
+  }
+
+  /* ========================================
+     EXPERIENCE
+     ======================================== */
+  .experience {
+    padding-bottom: var(--space-3xl);
+  }
+
+  .exp-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    margin-top: var(--space-md);
+  }
+
+  .exp-item {
+    display: flex;
+    gap: var(--space-md);
+    padding: var(--space-md) var(--space-lg);
+    position: relative;
+  }
+
+  .exp-item:hover {
+    transform: translateY(-2px);
+  }
+
+  .exp-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+    margin-top: 0.5rem;
+    box-shadow: 0 0 0 4px var(--accent-soft);
+  }
+
+  .exp-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .exp-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+  }
+
+  .exp-header h3 {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 700;
+  }
+
+  .exp-date {
+    font-size: 0.82rem;
+    color: var(--text-tertiary);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .exp-company {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin-top: 0.15rem;
+  }
+
+  .exp-desc {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    margin-top: 0.35rem;
+  }
+
+  /* ========================================
+     FEATURED PROJECTS
+     ======================================== */
+  .featured {
+    padding-bottom: var(--space-xl);
+  }
+
+  .featured-header {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: var(--space-md);
+    margin-bottom: var(--space-xl);
+  }
+
+  .featured-title {
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    letter-spacing: -0.03em;
+  }
+
+  .featured-grid {
+    display: grid;
+    gap: var(--space-md);
+  }
+
+  .project-card {
+    display: grid;
+    grid-template-columns: 280px 1fr auto;
+    align-items: center;
+    gap: var(--space-lg);
+    padding: var(--space-sm);
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .project-card:hover .project-card-arrow {
+    transform: translate(3px, -3px);
+    color: var(--accent);
+  }
+
+  .project-card-img {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    aspect-ratio: 16 / 10;
+    background: var(--bg-base);
+  }
+
+  .project-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--duration-slow) var(--ease-out);
+  }
+
+  .project-card:hover .project-card-img img {
+    transform: scale(1.04);
+  }
+
+  .project-card-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-tertiary);
+    background: linear-gradient(135deg, var(--bg-base) 0%, rgba(45, 106, 79, 0.06) 100%);
+  }
+
+  .project-card-body {
+    padding: var(--space-xs) 0;
+  }
+
+  .project-card-body h3 {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.35rem;
+  }
+
+  .project-card-body p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    max-width: 45ch;
+  }
+
+  .project-card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-top: 0.75rem;
+  }
+
+  .project-card-arrow {
+    color: var(--text-tertiary);
+    transition: all var(--duration-fast) var(--ease-out);
+    flex-shrink: 0;
+    padding: var(--space-sm);
+  }
+
+  /* Empty state */
+  .empty-state {
+    text-align: center;
+    padding: var(--space-2xl) var(--space-lg);
+  }
+
+  .empty-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 72px;
+    height: 72px;
+    border-radius: var(--radius-lg);
+    background: var(--accent-soft);
+    color: var(--accent);
+    margin: 0 auto var(--space-md);
+  }
+
+  .empty-state h3 {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .empty-state p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    max-width: 40ch;
+    margin: 0 auto;
+  }
+
+  /* ========================================
+     RESPONSIVE
+     ======================================== */
+  @media (max-width: 900px) {
+    .hero {
+      grid-template-columns: 1fr;
+      gap: var(--space-xl);
+    }
+
+    .hero-visual {
+      display: none;
+    }
+
+    .about-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
+    }
+
+    .project-card {
+      grid-template-columns: 1fr;
+      gap: var(--space-sm);
+    }
+
+    .project-card-img {
+      aspect-ratio: 2 / 1;
+    }
+
+    .project-card-arrow {
+      display: none;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .hero-title {
+      font-size: clamp(2.2rem, 10vw, 3.2rem);
+    }
+
+    .hero-subtitle {
+      font-size: 1.05rem;
+    }
+
+    .featured-header {
+      flex-direction: column;
+      align-items: start;
+    }
+
+    .exp-header {
+      flex-direction: column;
+      align-items: start;
+      gap: 0.15rem;
+    }
+  }
+</style>
