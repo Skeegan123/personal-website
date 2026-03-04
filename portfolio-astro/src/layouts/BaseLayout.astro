@@ -3,6 +3,7 @@ import '@fontsource/manrope/400.css';
 import '@fontsource/manrope/500.css';
 import '@fontsource/manrope/600.css';
 import '@fontsource/space-grotesk/700.css';
+import PostHogLayout from './PostHogLayout.astro';
 
 interface Props {
   title: string;
@@ -56,6 +57,7 @@ const structuredData = {
 <!doctype html>
 <html lang="en">
   <head>
+    <PostHogLayout />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
