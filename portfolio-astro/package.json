@@ -5,10 +5,13 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro"
+    "preview": "npm run build && wrangler dev",
+    "astro": "astro",
+    "deploy": "npm run build && wrangler deploy",
+    "cf-typegen": "wrangler types"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "^12.6.12",
     "@astrojs/sitemap": "^3.7.0",
     "@fontsource/manrope": "^5.2.8",
     "@fontsource/space-grotesk": "^5.2.10",
@@ -16,5 +19,8 @@
     "@sanity/client": "^7.16.0",
     "@sanity/image-url": "^2.0.3",
     "astro": "^5.17.1"
+  },
+  "devDependencies": {
+    "wrangler": "^4.70.0"
   }
 }
