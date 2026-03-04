@@ -16,6 +16,8 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
     defaults:
       run:
         working-directory: studio-portfolio
@@ -34,7 +36,12 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Verify Sanity token exists
+        run: |
+          if [ -z "$SANITY_AUTH_TOKEN" ]; then
+            echo "Missing SANITY_AUTH_TOKEN GitHub secret"
+            exit 1
+          fi
+
       - name: Deploy Studio
-        run: pnpm run deploy -- --yes
-        env:
-          SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
+        run: pnpm exec sanity deploy --yes
