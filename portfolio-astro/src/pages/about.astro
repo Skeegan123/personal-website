@@ -2,6 +2,9 @@
 import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import headshot from '../assets/headshot.jpg';
+import { getFeaturedProjects } from '../lib/sanity';
+
+const featuredProjects = await getFeaturedProjects();
 ---
 
 <BaseLayout
@@ -76,34 +79,15 @@ import headshot from '../assets/headshot.jpg';
   <section class="about-projects reveal">
     <h2>Notable projects</h2>
     <div class="projects-list">
-      <div class="project-item glass-card">
-        <div class="project-meta">
-          <h3>PackPoint</h3>
-          <span class="project-context">DubHacks '22 Finalist</span>
-        </div>
-        <p>A location-sharing app for college students built with SwiftUI, Firebase, and Mapbox. Users pin and share their favorite spots around campus.</p>
-      </div>
-      <div class="project-item glass-card">
-        <div class="project-meta">
-          <h3>MultiStreamers</h3>
-          <span class="project-context">1,100 peak concurrent users</span>
-        </div>
-        <p>A web app for watching multiple Twitch and YouTube streams at the same time. Built with React and Node.js. Hit 1,100 users in 30 minutes at peak.</p>
-      </div>
-      <div class="project-item glass-card">
-        <div class="project-meta">
-          <h3>Wedding RSVP System</h3>
-          <span class="project-context">Personal project</span>
-        </div>
-        <p>A QR code based RSVP web app where guests received personalized codes. Scanning took them directly to their RSVP page with their info pre-filled.</p>
-      </div>
-      <div class="project-item glass-card">
-        <div class="project-meta">
-          <h3>White Elephant App</h3>
-          <span class="project-context">Personal project</span>
-        </div>
-        <p>A Secret Santa and White Elephant randomizer for my family. It assigns people, contacts everyone with their match, and sends each person a survey about themselves.</p>
-      </div>
+      {featuredProjects.map((project) => (
+        <a href={`/projects/${project.slug}`} class="project-item glass-card">
+          <div class="project-meta">
+            <h3>{project.title}</h3>
+            {project.role && <span class="project-context">{project.role}</span>}
+          </div>
+          <p>{project.summary ?? 'A project worth exploring.'}</p>
+        </a>
+      ))}
     </div>
     <div class="projects-cta">
       <a href="/projects" class="btn btn-secondary">
@@ -124,6 +108,10 @@ import headshot from '../assets/headshot.jpg';
         </a>
         <a href="https://github.com/Skeegan123" target="_blank" rel="noreferrer" class="btn btn-secondary">
           GitHub
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+        </a>
+        <a href="https://x.com/Skeegan123" target="_blank" rel="noreferrer" class="btn btn-secondary">
+          X
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
         </a>
         <a href="mailto:contact@keegangaffney.com" class="btn btn-secondary">
@@ -271,7 +259,16 @@ import headshot from '../assets/headshot.jpg';
   }
 
   .project-item {
+    display: block;
     padding: var(--space-md) var(--space-lg);
+    color: inherit;
+    text-decoration: none;
+    transition: transform var(--duration-normal) var(--ease-out), border-color var(--duration-normal) var(--ease-out);
+  }
+
+  .project-item:hover {
+    border-color: var(--border-strong);
+    transform: translateY(-2px);
   }
 
   .project-meta {

@@ -248,6 +248,38 @@ export default defineType({
       type: 'url',
       group: 'links',
     }),
+    defineField({
+      name: 'externalLinks',
+      title: 'Additional Links',
+      type: 'array',
+      group: 'links',
+      description: 'Extra project links such as docs, npm packages, launch posts, or APIs.',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'label',
+              title: 'Label',
+              type: 'string',
+              validation: (rule) => rule.required().max(40),
+            }),
+            defineField({
+              name: 'url',
+              title: 'URL',
+              type: 'url',
+              validation: (rule) => rule.required(),
+            }),
+          ],
+          preview: {
+            select: {
+              title: 'label',
+              subtitle: 'url',
+            },
+          },
+        },
+      ],
+    }),
 
     // ── Meta ─────────────────────────────────────────────────
     defineField({
@@ -257,6 +289,14 @@ export default defineType({
       group: 'meta',
       initialValue: false,
       description: 'Show this project on the homepage.',
+    }),
+    defineField({
+      name: 'featuredOrder',
+      title: 'Featured Order',
+      type: 'number',
+      group: 'meta',
+      description: 'Lower numbers appear first on featured surfaces. Leave blank for normal date ordering.',
+      hidden: ({document}) => document?.featured !== true,
     }),
     defineField({
       name: 'publishedAt',

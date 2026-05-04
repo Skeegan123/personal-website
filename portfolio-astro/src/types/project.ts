@@ -23,6 +23,10 @@ export interface Project {
   liveUrl?: string;
   figmaUrl?: string;
   devpostUrl?: string;
+  externalLinks?: {
+    label: string;
+    url: string;
+  }[];
   imageUrl?: string;
   imageAlt?: string;
   gallery?: {
@@ -31,6 +35,7 @@ export interface Project {
     caption?: string;
   }[];
   featured?: boolean;
+  featuredOrder?: number;
   publishedAt?: string;
   challenges?: string[];
   learnings?: string[];

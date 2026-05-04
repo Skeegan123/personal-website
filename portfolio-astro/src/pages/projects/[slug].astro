@@ -35,6 +35,7 @@ const links = [
   project.repoUrl && { label: 'Source Code', url: project.repoUrl, icon: 'github' },
   project.figmaUrl && { label: 'Figma', url: project.figmaUrl, icon: 'figma' },
   project.devpostUrl && { label: 'Devpost', url: project.devpostUrl, icon: 'devpost' },
+  ...(project.externalLinks?.map((link) => ({ ...link, icon: 'external' })) ?? []),
 ].filter(Boolean) as { label: string; url: string; icon: string }[];
 
 // Meta items for the sidebar
@@ -101,6 +102,9 @@ const metaItems = [
               )}
               {link.icon === 'devpost' && (
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M6.002 1.61L0 12.004 6.002 22.39h11.996L24 12.004 17.998 1.61H6.002zm1.593 4.084h3.947c3.605 0 6.276 1.695 6.276 6.31 0 4.436-3.21 6.302-6.456 6.302H7.595V5.694zm2.517 2.449v7.714h1.241c2.646 0 3.862-1.55 3.862-3.861.009-2.569-1.096-3.853-3.767-3.853h-1.336z"/></svg>
+              )}
+              {link.icon === 'external' && (
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg>
               )}
               {link.label}
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
@@ -537,6 +541,14 @@ const metaItems = [
     line-height: 1.65;
     color: #abb2bf;
     font-family: 'SF Mono', 'Fira Code', monospace;
+  }
+
+  .prose :global(pre code) {
+    display: block;
+    padding: 0;
+    background: transparent;
+    border-radius: 0;
+    font-size: inherit;
   }
 
   /* ========================================

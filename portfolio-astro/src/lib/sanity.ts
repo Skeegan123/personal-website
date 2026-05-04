@@ -6,9 +6,14 @@ const projectId = import.meta.env.PUBLIC_SANITY_PROJECT_ID;
 const dataset = import.meta.env.PUBLIC_SANITY_DATASET;
 
 const apiVersion = import.meta.env.PUBLIC_SANITY_API_VERSION ?? '2025-01-01';
-const useCdn = import.meta.env.PUBLIC_SANITY_USE_CDN !== 'false';
+const previewDraftsRequested = import.meta.env.SANITY_PREVIEW_DRAFTS === 'true';
+const token = import.meta.env.SANITY_API_READ_TOKEN;
+const previewDrafts = previewDraftsRequested && Boolean(token);
+const useCdn = previewDrafts ? false : import.meta.env.PUBLIC_SANITY_USE_CDN !== 'false';
+const perspective = previewDrafts ? 'drafts' : 'published';
 
 export const sanityConfigured = Boolean(projectId && dataset);
+export const sanityPreviewEnabled = previewDrafts && Boolean(token);
 
 const client = sanityConfigured
   ? createClient({
@@ -16,7 +21,8 @@ const client = sanityConfigured
       dataset,
       apiVersion,
       useCdn,
-      perspective: 'published'
+      perspective,
+      token: previewDrafts ? token : undefined
     })
   : null;
 
@@ -39,6 +45,10 @@ const projectFields = `
   liveUrl,
   figmaUrl,
   devpostUrl,
+  externalLinks[]{
+    label,
+    url
+  },
   "imageUrl": image.asset->url,
   "imageAlt": image.alt,
   "imageWidth": image.asset->metadata.dimensions.width,
@@ -51,6 +61,7 @@ const projectFields = `
     "height": asset->metadata.dimensions.height
   },
   featured,
+  featuredOrder,
   publishedAt,
   challenges,
   learnings,
@@ -61,7 +72,7 @@ const projectListQuery = `*[_type == "project" && defined(slug.current)] | order
   ${projectFields}
 }`;
 
-const featuredProjectsQuery = `*[_type == "project" && defined(slug.current) && featured == true] | order(coalesce(publishedAt, _createdAt) desc) {
+const featuredProjectsQuery = `*[_type == "project" && defined(slug.current) && featured == true] | order(coalesce(featuredOrder, 999) asc, coalesce(publishedAt, _createdAt) desc)[0...3] {
   ${projectFields}
 }`;
 

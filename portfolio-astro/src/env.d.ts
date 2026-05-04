@@ -5,4 +5,6 @@ interface ImportMetaEnv {
   readonly PUBLIC_SANITY_DATASET?: string;
   readonly PUBLIC_SANITY_API_VERSION?: string;
   readonly PUBLIC_SANITY_USE_CDN?: string;
+  readonly SANITY_PREVIEW_DRAFTS?: string;
+  readonly SANITY_API_READ_TOKEN?: string;
 }
