@@ -60,6 +60,12 @@ const projectFields = `
     "width": asset->metadata.dimensions.width,
     "height": asset->metadata.dimensions.height
   },
+  embeds[]{
+    title,
+    url,
+    description,
+    height
+  },
   featured,
   featuredOrder,
   publishedAt,

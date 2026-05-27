@@ -10,6 +10,13 @@ export interface ProjectImage {
   caption?: string;
 }
 
+export interface ProjectEmbed {
+  title: string;
+  url: string;
+  description?: string;
+  height?: number;
+}
+
 export interface Project {
   _id: string;
   title: string;
@@ -34,6 +41,7 @@ export interface Project {
     alt?: string;
     caption?: string;
   }[];
+  embeds?: ProjectEmbed[];
   featured?: boolean;
   featuredOrder?: number;
   publishedAt?: string;

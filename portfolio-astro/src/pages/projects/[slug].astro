@@ -20,8 +20,14 @@ if (!project) {
   throw new Error(`Project not found for slug: ${slug}`);
 }
 
+const monthFormatter = new Intl.DateTimeFormat('en-US', {
+  year: 'numeric',
+  month: 'long',
+  timeZone: 'UTC',
+});
+
 const formattedDate = project.publishedAt
-  ? new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long' }).format(new Date(project.publishedAt))
+  ? monthFormatter.format(new Date(project.publishedAt))
   : null;
 const projectDescription =
   project.summary ?? `Case study for ${project.title}, a project built by Keegan Gaffney.`;
@@ -44,6 +50,46 @@ const metaItems = [
   formattedDate && { label: 'Date', value: formattedDate },
   project.stack && { label: 'Stack', value: project.stack.join(' · ') },
 ].filter(Boolean) as { label: string; value: string }[];
+
+function getSafeEmbedUrl(url: string): string | null {
+  try {
+    const parsed = new URL(url);
+    const hostname = parsed.hostname.toLowerCase();
+    const allowedHost =
+      hostname === 'id.land' ||
+      hostname.endsWith('.id.land') ||
+      hostname === 'www.youtube.com' ||
+      hostname === 'www.youtube-nocookie.com' ||
+      hostname === 'player.vimeo.com';
+
+    if (parsed.protocol !== 'https:' || !allowedHost) {
+      return null;
+    }
+
+    return parsed.toString();
+  } catch {
+    return null;
+  }
+}
+
+function getEmbedHeight(height: number | undefined): number {
+  if (!height) {
+    return 620;
+  }
+
+  return Math.min(Math.max(Math.round(height), 360), 900);
+}
+
+const embeds = (project.embeds ?? [])
+  .map((embed) => ({
+    ...embed,
+    frameHeight: getEmbedHeight(embed.height),
+    safeUrl: getSafeEmbedUrl(embed.url),
+  }))
+  .filter((embed) => Boolean(embed.safeUrl)) as (NonNullable<typeof project.embeds>[number] & {
+    frameHeight: number;
+    safeUrl: string;
+  })[];
 ---
 
 <BaseLayout
@@ -169,6 +215,30 @@ const metaItems = [
                 </figure>
               ))}
             </div>
+          </section>
+        )}
+
+        {/* -- Embeds ------------------------------------------------ */}
+        {embeds.length > 0 && (
+          <section class="project-embeds">
+            {embeds.map((embed) => (
+              <article class="embed-card">
+                <div class="embed-copy">
+                  <h2>{embed.title}</h2>
+                  {embed.description && <p>{embed.description}</p>}
+                </div>
+                <div class="embed-frame" style={`--embed-height: ${embed.frameHeight}px;`}>
+                  <iframe
+                    src={embed.safeUrl}
+                    title={embed.title}
+                    loading="lazy"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allow="fullscreen; geolocation"
+                    allowfullscreen
+                  />
+                </div>
+              </article>
+            ))}
           </section>
         )}
 
@@ -596,6 +666,52 @@ const metaItems = [
     padding: var(--space-xs) var(--space-sm);
     font-size: 0.8rem;
     color: var(--text-tertiary);
+  }
+
+  /* ========================================
+     EMBEDS
+     ======================================== */
+  .project-embeds {
+    margin-bottom: var(--space-2xl);
+  }
+
+  .embed-card + .embed-card {
+    margin-top: var(--space-xl);
+  }
+
+  .embed-copy {
+    max-width: 65ch;
+    margin-bottom: var(--space-md);
+  }
+
+  .embed-copy h2 {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: 0;
+    margin-bottom: 0.45rem;
+  }
+
+  .embed-copy p {
+    font-size: 0.96rem;
+    line-height: 1.65;
+    color: var(--text-secondary);
+  }
+
+  .embed-frame {
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    background: var(--bg-base);
+    box-shadow: var(--shadow-md);
+  }
+
+  .embed-frame iframe {
+    display: block;
+    width: 100%;
+    height: var(--embed-height, 620px);
+    border: 0;
+    background: var(--bg-base);
   }
 
   /* ========================================

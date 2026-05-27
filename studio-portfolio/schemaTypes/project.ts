@@ -222,6 +222,53 @@ export default defineType({
         },
       ],
     }),
+    defineField({
+      name: 'embeds',
+      title: 'Embeds',
+      type: 'array',
+      group: 'media',
+      description: 'Live project embeds such as product demos, maps, videos, or tours.',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'title',
+              title: 'Title',
+              type: 'string',
+              validation: (rule) => rule.required().max(80),
+            }),
+            defineField({
+              name: 'url',
+              title: 'Embed URL',
+              type: 'url',
+              validation: (rule) => rule.required(),
+            }),
+            defineField({
+              name: 'description',
+              title: 'Description',
+              type: 'text',
+              rows: 2,
+              validation: (rule) => rule.max(220),
+            }),
+            defineField({
+              name: 'height',
+              title: 'Height',
+              type: 'number',
+              initialValue: 620,
+              description: 'Optional iframe height in pixels.',
+              validation: (rule) => rule.min(360).max(900),
+            }),
+          ],
+          preview: {
+            select: {
+              title: 'title',
+              subtitle: 'url',
+            },
+          },
+        },
+      ],
+    }),
 
     // ── Links ────────────────────────────────────────────────
     defineField({
